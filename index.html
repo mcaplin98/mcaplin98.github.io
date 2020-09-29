@@ -11771,15 +11771,25 @@ div#notebook {
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://mcaplin98.github.io/">https://mcaplin98.github.io/</a></p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
+
 
 <span class="c1">#load in data from file</span>
 <span class="n">comp_mort</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/comp_mort_99-16.txt&quot;</span><span class="p">,</span>
@@ -11832,22 +11842,38 @@ div#notebook {
 <span class="k">del</span> <span class="n">comp_mort</span><span class="p">[</span><span class="s1">&#39;Crude_Rate&#39;</span><span class="p">]</span>
 <span class="n">comp_mort</span><span class="p">[</span><span class="s1">&#39;Crude_Rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">crude_rate</span>
 <span class="n">comp_mort</span><span class="p">[</span><span class="s1">&#39;Unreliable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reliable</span>
+<span class="n">comp_mort</span><span class="p">[</span><span class="s1">&#39;Crude_Rate&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">comp_mort</span><span class="p">[</span><span class="s1">&#39;Crude_Rate&#39;</span><span class="p">],</span><span class="n">errors</span><span class="o">=</span><span class="s1">&#39;coerce&#39;</span><span class="p">)</span>
 
-
-
+<span class="c1">#print(comp_mort.County_Code.describe())</span>
+<span class="c1">#float. This works as it is a numberical code</span>
+<span class="c1">#print(comp_mort.Infant_Age_Groups.describe())</span>
+<span class="c1">#object. This is correct, as the ages are catagories based on age. An int could work here, but the catagories are distinct for now</span>
+<span class="c1">#print(comp_mort.Deaths.describe())</span>
+<span class="c1">#float. this works as it is a count of the # of deaths</span>
+<span class="c1">#print(comp_mort.Population.describe())</span>
+<span class="c1">#float. this works as it is a count of the # of people</span>
+<span class="c1">#print(comp_mort.County.describe())</span>
+<span class="c1">#object. correct as the counties are all named places</span>
+<span class="c1">#print(comp_mort.State.describe())</span>
+<span class="c1">##object. correct as the states are all named places</span>
+<span class="c1">#print(comp_mort.Crude_Rate.describe())</span>
+<span class="c1">#float. Correct as it is an average # per 1000</span>
+<span class="c1">#print(comp_mort.Unreliable.describe())</span>
+<span class="c1">#float. This works, as the column contains 0/1 values, given if the unreliable flag is True or False</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Mason Caplin</span>
 <span class="sd">Final Tutorial Milestone 1 Writeup</span>
 <span class="sd">Due 9/29/2020</span>
-<span class="sd">As a graduate student, I will be working alone on my final project. Due to this, I will not be submitting a collaboration plan with this writeup. For my project, I would like to examine reasons for the disparity in birth mortality rates among certain demographics, namely race and income. Currently, a child can be up to three times more likely to die during birth, based one his or her ethnicity. I would like to examine if this is the result of factors within a hospital, or if there is a recognizable link between the birth death rate and environmental factors during pregnancy. This would require me to compare the mortality rates with factors such as race, income, and chemical pollution rates. </span>
+
+<span class="sd">As a graduate student, I will be working alone on my final project. Due to this, I will not be submitting a collaboration plan with this writeup. For my project, I would like to examine reasons for the disparity in birth mortality rates among certain demographics, namely race and income. Currently, a child can be up to three times more likely to die during birth, based one his or her ethnicity. I would like to examine if this is the result of factors within a hospital, or if there is a recognizable link between the birth death rate and environmental factors during pregnancy. This would require me to compare the mortality rates with factors such as race, income, and chemical pollution rates. My question would be: which factors affect birth death rates, and how doe these rates change given race, income, and chemical pollution.</span>
 
 <span class="sd">At the moment, I am working on a dataset, generated from data provided by the Center for Disease Control and Prevention (CDC), that provides information on neonatal (&lt;1day old) mortality rates. This information is reported based on the county and includes information such as the number of deaths, reliability factor, and population of the county. This dataset is 1925 rows, representing approximately sixty-one percent of the 3141 counties in the United States. I would like to use this information to provide a per capita rate for each county, which can than be compared to data on demographics and chemical pollution.</span>
 
 <span class="sd">Obtaining and formatting the data presented some challenges. The dataset was generated as a subset of a much larger dataset, owned by the CDC, and required me to select what information is relevant and how to best group this information. The data was presented as a large text file, which contained very little explanation and was presented with lists within cells. I had to read the file into a somewhat workable, if not tidy, format and then begin tidying the data. This required I remove a large amount of information that is extraneous to the dataset. The information was largely licensing agreements and a statement by the CDC. I then had to remove extraneous or redundant information and separate the lists into their own respective columns. All told, I was able to generate a table that uses counties as rows, presents summary information for each county, and is workable for both categorical and quantitative variables.  </span>
+
+<span class="sd">This data is useful because it can answer questions about the neonatal mortality rates by county. The crude rate is the number of neonatal deaths per one thousand individuals. This data, along with the deaths per county, can be used to show which states and counties have the highest death rates. By comparing this information to data about chemical pollution or demographic, one can determine which areas are likely most affected by these factors. </span>
 <span class="sd">&quot;&quot;&quot;</span>
-
-
 
 <span class="n">comp_mort</span>
 </pre></div>
@@ -11862,7 +11888,7 @@ div#notebook {
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[1]:</div>
+<div class="prompt output_prompt">Out[16]:</div>
 
 
 
